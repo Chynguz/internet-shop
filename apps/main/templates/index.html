@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
 
 {% block content %}
+
 <div class="container">
-  <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+  <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" style="width: 80%; height: auto; align-items: center; justify-content: center;">
     <div class="carousel-inner">
       <div class="carousel-item active">
         <img src="{% static '1.webp' %}" class="d-block w-100" alt="...">
@@ -17,45 +19,40 @@
     </div>
   </div>
 </div>
+  <aside>
+    <h1>Категории</h1>
+    {% for i in category %}
+      <p><a required href="{% url 'category' i.slug %}">{{i.title}}</a></p>
+    {% endfor %}
+  </aside>
+  <main>
+    <div class="container">
 
-{% for i in messages %}
-  <h1>{{i}}</h1>
-
-{% endfor %}
-
-<div class="container" >
-  {% for a in category %}
-  <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100px;">
-
-    <h5 style="font-size: 30px; background-color: #ffce00;">{{a.title}} </h5>
-  </div>
-  <div class="" style="display: flex; flex-wrap: wrap; gap: 20px;">
-    {% for i in product %}
-    {% if i.category == a %}
-  
-  <div class="card mt-5" style="width: 18rem;">
-    <a href="{% url 'info' id=i.id %}">
-    <img src="{{i.image.url}}" class="card-img-top" alt=""></a>
-    <div class="card-body">
-      <h5 class="card-title" style="text-align: center;"> <a href="{% url 'info' id=i.id %}"> {{i.title}}</a></h5>
-      <p class="card-text" style="text-align: center;">{{i.description}}</p>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item"> Цена:  {{i.price}} сом</li>
-      <li class="list-group-item">A second item</li>
-      <li class="list-group-item">A third item</li>
-    </ul>
-    <div class="card-body">
-      <a href="#" class="card-link">Card link</a>
-      <a href="{% url 'add_to_cart' i.id %}" class="btn btn-dark m-3"><i class="fa-solid fa-cart-shopping"></i></a>
-    </div>
-  </div>
-  {% endif %}
-  {% endfor %}
-  </div>
-  
-  {% endfor %}
-</div>
-
+      <div class="" style="display: flex; flex-wrap: wrap; gap: 10px;">
+        
+        {% for i in product %}
+        <div class="card m-3 mb-5" style="width: 15rem;">
+          <a href="{% url 'info' id=i.id %}">
+            <img src="{{i.image.url}}" class="card-img-top" alt=""></a>
+            <div class="card-body">
+              <h5 class="card-title" style="text-align: center;"> <a href="{% url 'info' id=i.id %}"> {{i.title}}</a></h5>
+              <p class="card-text" style="text-align: center;">{{i.description}}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"> Цена:  {{i.price}} сом</li>
+              <li class="list-group-item">A second item</li>
+              <li class="list-group-item">A third item</li>
+            </ul>
+            <div class="card-body">
+              <a href="#" class="card-link">Card link</a>
+              <a href="{% url 'add_to_cart' i.id %}" class="btn btn-dark m-3"><i class="fa-solid fa-cart-shopping"></i></a>
+            </div>
+          </div>
+          {% endfor %}
+        
+        </div>
+        
+      </div>
+    </main>
 
 {% endblock %}

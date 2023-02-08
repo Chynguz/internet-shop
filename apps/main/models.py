@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 class Category(models.Model):
     title = models.CharField(max_length=255)
+    slug = models.SlugField(null=False, default='')
 
     def __str__(self) -> str:
         return self.title
@@ -14,3 +15,5 @@ class Product(models.Model):
     image = models.ImageField(upload_to='product_image', verbose_name='Изображение')
     price = models.IntegerField(verbose_name='Цена')
     category = models.ForeignKey(to=Category, on_delete=models.CASCADE)
+
+

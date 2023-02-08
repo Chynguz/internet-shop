@@ -7,9 +7,18 @@
 <div class="box bg-img">
   <div class="content">
 
-    <h2>Sign<span> Up</span></h2>
+  {% if form.errors %}
+    {% for i in form %}
+      {% for error in i.errors %}
+        {{ error|escape }}
+      {% endfor %}
+    {% endfor %}
+  {% endif %}
+
+  <h2>Sign<span> Up</span></h2>
+
 <form action="{% url 'registration'%}" method="POST">
-  {% csrf_token %}
+{% csrf_token %}
     <div class="forms">
 
       <div class="user-input">
@@ -34,7 +43,7 @@
       </div>
     </div>
 
-    <button class="login-btn">Sign Up</button>
+    <button class="login-btn" type="submit">Sign Up</button>
     <br>
 </form>
     <p class="f-pass">

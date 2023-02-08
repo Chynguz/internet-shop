@@ -14,13 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-
-from apps.main.views import main, info, add_to_cart, cart, remove
+from django.contrib.auth.decorators import login_required
+from apps.main.views import add_to_cart, remove, MainListView, AboutUsView, CardView, InfoView, CategoryView, search
 
 urlpatterns = [
-    path('', main, name='main'),
-    path('info/<int:id>', info, name='info'),
+    # path('', main, name='main'),
+    path('', MainListView.as_view(), name='main'),
+    path('info/<int:id>', InfoView.as_view(), name='info'),
     path('add_to_cart/<int:id>', add_to_cart, name='add_to_cart'),
-    path('cart/', cart, name='cart'),
+    path('cart/', login_required(CardView.as_view()), name='cart'),
     path('remove/<int:id>', remove, name='remove'),
+    path('search/', search, name='search'),
+    path('category/<slug:slug>', CategoryView.as_view(), name='category'),
+    path('about/', AboutUsView.as_view(), name='about'),
+
 ]

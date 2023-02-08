@@ -1,0 +1,32 @@
+h1 { font-size: larger; }
+aside{
+    float: left;
+    background: #181818;
+    width: 20%;
+    padding: 2.5%;
+    height: 100vh;
+    color: white;
+    border-right: 3px solid #4d4d4d;
+}
+aside p {
+    font-size: larger;
+    text-align: center;
+    color: rgb(30, 31, 27);
+    background-color: rgb(201, 211, 219);
+    border-radius: 10px;
+    
+}
+aside a {
+    text-decoration: none;
+    color: rgb(22, 26, 3);   
+}
+aside a:hover {
+    color: rgb(114, 82, 33);
+}
+main {
+    float: left;
+    color: #181818;
+    margin-top: 20px;
+    text-align: center;
+    width: 75%;
+}

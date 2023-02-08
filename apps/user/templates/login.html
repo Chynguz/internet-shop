@@ -7,6 +7,13 @@
 <div class="box bg-img">
   <div class="content">
 
+    {% if form.non_field_errors %}
+      {{ form.non_field_errors }}  
+    {% endif %}
+
+    {% for i in messages %}
+      <h1>{{i}}</h1>
+    {% endfor %}
     <h2>Sign<span> In</span></h2>
 
     <form action="{% url 'login' %}" method="post">
