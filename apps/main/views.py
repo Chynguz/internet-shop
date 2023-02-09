@@ -56,7 +56,7 @@ class CardView(TemplateView):
         
     def get_context_data(self, **kwargs):
         context = super(CardView, self).get_context_data(**kwargs)
-        cart_session = self.request.session.get('cart_session', [])
+        cart_session = self.request.session.get('cart_session1', [])
         amount = len(cart_session)
         products = Product.objects.filter(id__in = cart_session)
         total_price = 0
