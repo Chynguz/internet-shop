@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('apps.main.urls')),
     path('users/', include('apps.user.urls')),
+    path('__debug__/', include('debug_toolbar.urls')),
 ]
 urlpatterns+=static(MEDIA_URL, document_root=MEDIA_ROOT)

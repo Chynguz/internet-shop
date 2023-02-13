@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.list import ListView
 from django.views.generic.base import TemplateView
 from django.views.generic import FormView
-
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 
 
 # Create your views here.
@@ -18,8 +19,18 @@ class MainListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(MainListView, self).get_context_data(**kwargs)
-        category = Category.objects.all()
-        product = Product.objects.all()
+        cache_category = cache.get('category')
+        if not cache_category:
+            category = Category.objects.all()
+            cache.set('category', category, 10)
+        else:
+            category = cache_category
+        cache_product = cache.get('product')
+        if not cache_product:
+            product = Product.objects.all()
+            cache.set('product', product, 20)
+        else:
+            product = cache_product
         context['category'] = category
         context['product'] = product
         return context
@@ -84,6 +95,22 @@ class CardView(TemplateView):
 #     context = {'products':products, 'amount':amount, 'total_price':total_price}
 #     return render(request, 'cart.html', context)
 
+# def orders(request):
+#     if request.method == 'POST': 
+#         order_session = request.session.get('cart_session1', [])
+#         first_name = request.POST.get('ferst_name')
+#         last_name = request.POST.get('last_name')
+#         address = request.POST.get('address')
+#         productes = Product.objects.filter(id__in=order_session)
+#         amount = len(order_session)
+#         total_price = 0
+#         for i in productes:
+#             i.count = order_session.count(i.id)
+#             i.sum = i.cout * i.price
+#             total_price += i.sum
+#         context = {'first_name': first_name, 'last_name': last_name, 'address': address, 'amount': amount, 'total_prise': total_price}
+#         return render(request, 'order.html', context)
+
 
         
 class InfoView(TemplateView):
@@ -113,6 +140,8 @@ class InfoView(TemplateView):
 #         context['cart_session1'] = g
 #         return context
 
+
+@cache_page(100)
 def remove(request, id):
     cart_session = request.session.get('cart_session1', [])
     g = cart_session
@@ -121,7 +150,7 @@ def remove(request, id):
     request.session['cart_session'] = g
     return HttpResponseRedirect('/cart')
 
-
+@cache_page(100)
 def search(request):
     if request.method == 'POST':
         product = request.POST.get('product')
@@ -146,6 +175,7 @@ def search(request):
 #     category = Category.objects.get(slug = slug)
 #     product = Product.objects.filter(category = category)
 #     return render(request, 'category.html', {'products': product, 'category': category,'cat':cat})
+
 
 class CategoryView(ListView):
     model = Category

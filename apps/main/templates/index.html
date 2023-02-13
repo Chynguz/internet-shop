@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load cache %}
+{% cache 500 sidebar %}
+
 <link rel="stylesheet" href="{% static 'style.css' %}">
 
 {% block content %}
@@ -19,8 +22,8 @@
     </div>
   </div>
 </div>
-  <aside>
-    <h1>Категории</h1>
+<aside>
+  <h1>Категории</h1>
     {% for i in category %}
       <p><a required href="{% url 'category' i.slug %}">{{i.title}}</a></p>
     {% endfor %}
@@ -54,5 +57,7 @@
         
       </div>
     </main>
-
+    
 {% endblock %}
+    
+{% endcache %}

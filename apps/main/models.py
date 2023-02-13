@@ -17,3 +17,13 @@ class Product(models.Model):
     category = models.ForeignKey(to=Category, on_delete=models.CASCADE)
 
 
+# class Order(models.Model):
+#     first_name = models.CharField(max_length=200, verbose_name='Имя')
+#     last_name = models.CharField(max_length=200, verbose_name='Фамилия')
+#     address = models.TextField(verbose_name='Адрес')
+#     productes = models.ForeignKey(Product, on_delete=models.CASCADE)
+#     amount = models.CharField(max_length=10, verbose_name='Колличество')
+#     total_price = models.CharField(max_length=100, verbose_name='Сумма')
+
+
+
